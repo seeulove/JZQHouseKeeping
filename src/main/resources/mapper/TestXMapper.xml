@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jorey.housekeeping.dao.TestXMapper">
+  <resultMap id="BaseResultMap" type="com.jorey.housekeeping.bean.TestX">
+    <id column="testx_id" jdbcType="INTEGER" property="testxId" />
+    <result column="testx_name" jdbcType="VARCHAR" property="testxName" />
+    <result column="testx_tid" jdbcType="INTEGER" property="testxTid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    testx_id, testx_name, testx_tid
+  </sql>
+  <select id="selectByExample" parameterType="com.jorey.housekeeping.bean.TestXExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from testx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from testx
+    where testx_id = #{testxId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from testx
+    where testx_id = #{testxId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jorey.housekeeping.bean.TestXExample">
+    delete from testx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jorey.housekeeping.bean.TestX">
+    insert into testx (testx_id, testx_name, testx_tid
+      )
+    values (#{testxId,jdbcType=INTEGER}, #{testxName,jdbcType=VARCHAR}, #{testxTid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jorey.housekeeping.bean.TestX">
+    insert into testx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="testxId != null">
+        testx_id,
+      </if>
+      <if test="testxName != null">
+        testx_name,
+      </if>
+      <if test="testxTid != null">
+        testx_tid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="testxId != null">
+        #{testxId,jdbcType=INTEGER},
+      </if>
+      <if test="testxName != null">
+        #{testxName,jdbcType=VARCHAR},
+      </if>
+      <if test="testxTid != null">
+        #{testxTid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jorey.housekeeping.bean.TestXExample" resultType="java.lang.Long">
+    select count(*) from testx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update testx
+    <set>
+      <if test="record.testxId != null">
+        testx_id = #{record.testxId,jdbcType=INTEGER},
+      </if>
+      <if test="record.testxName != null">
+        testx_name = #{record.testxName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testxTid != null">
+        testx_tid = #{record.testxTid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update testx
+    set testx_id = #{record.testxId,jdbcType=INTEGER},
+      testx_name = #{record.testxName,jdbcType=VARCHAR},
+      testx_tid = #{record.testxTid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jorey.housekeeping.bean.TestX">
+    update testx
+    <set>
+      <if test="testxName != null">
+        testx_name = #{testxName,jdbcType=VARCHAR},
+      </if>
+      <if test="testxTid != null">
+        testx_tid = #{testxTid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where testx_id = #{testxId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jorey.housekeeping.bean.TestX">
+    update testx
+    set testx_name = #{testxName,jdbcType=VARCHAR},
+      testx_tid = #{testxTid,jdbcType=INTEGER}
+    where testx_id = #{testxId,jdbcType=INTEGER}
+  </update>
+</mapper>
